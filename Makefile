@@ -93,7 +93,7 @@ build-deps: ## Build common dependencies (protob)
 	# to use them is to create proper one in the begining of build
 ifeq ($(OS),Windows_NT)
 	( cd ./tiny-firmware/vendor && rm skycoin-crypto)
-	( cd ./tiny-firmware/vendor && cmd /c 'mklink /d skycoin-crypto ..\..\skycoin-api\')
+	( cd ./tiny-firmware/vendor && ln -s ..\..\skycoin-api\ skycoin-crypto)
 endif
 
 firmware-deps: build-deps ## Build firmware dependencies
