@@ -36,6 +36,8 @@ before_script:
     export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start';
     export shell="$msys2 -mingw64 -full-path -here -c \$\* --";
     export msys2+=" -msys2 -c \$\* --";
+    ( cd .\tiny-firmware\vendor && del skycoin-crypto)
+    ( cd .\tiny-firmware\vendor && mklink /d skycoin-crypto ..\..\skycoin-api\)
     $msys2 sh ./ci-scripts/install-windows.sh 1 ;
     else
     sh "./tiny-firmware/protob/ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;

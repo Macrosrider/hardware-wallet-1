@@ -91,10 +91,10 @@ build-deps: ## Build common dependencies (protob)
 	$(MAKE) -C tiny-firmware/protob/ build-c
 	# UNIX symbolic links don't supported by Windows, so the best way
 	# to use them is to create proper one in the begining of build
-ifeq ($(OS),Windows_NT)
-	( cd ./tiny-firmware/vendor && rm skycoin-crypto)
-	( cd ./tiny-firmware/vendor && ln -s ..\..\skycoin-api\ skycoin-crypto)
-endif
+# ifeq ($(OS),Windows_NT)
+# 	( cd ./tiny-firmware/vendor && rm skycoin-crypto)
+# 	( cd ./tiny-firmware/vendor && cmd /c 'mklink /d skycoin-crypto ..\..\skycoin-api\')
+# endif
 
 firmware-deps: build-deps ## Build firmware dependencies
 	$(MAKE) -C tiny-firmware/vendor/libopencm3/
