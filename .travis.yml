@@ -40,6 +40,7 @@ before_script:
     cd .\\tiny-firmware\\vendor;
     del /Q skycoin-crypto ;
     mklink /d skycoin-crypto ..\\..\\skycoin-api\\;
+    DIR;
     cd ..\\..\\;
     $msys2 sh ./ci-scripts/install-windows.sh 1 ;
     else
