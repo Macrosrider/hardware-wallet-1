@@ -96,14 +96,7 @@ CFLAGS   += $(OPTFLAGS) \
             -DRAND_PLATFORM_INDEPENDENT=1 \
             -I$(TOOLCHAIN_DIR)/include \
             -I$(GLOBAL_PATH) \
-
-UNAME_S := $(shell uname -o)
-
-ifeq ($(UNAME_S), Msys)
-CFLAGS += -I$(TOP_DIR)vendor/
-else
-CFLAGS+= -isystem$(TOP_DIR)vendor/
-endif
+						-I$(TOP_DIR)vendor/
 
 LDFLAGS  += -L$(TOP_DIR) \
             $(DBGFLAGS) \
