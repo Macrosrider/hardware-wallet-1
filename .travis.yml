@@ -48,6 +48,7 @@ before_script:
     sudo python3 -m pip install --force-reinstall pip;
     sudo python3 -m pip install setuptools;
     fi
+  - pip install yamllint
   # Install OS-specific test and build dependencies
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then export PATH="/opt/gcc-arm-none-eabi-6-2017-q2-update/bin:$PATH" ; fi
   # Install linters

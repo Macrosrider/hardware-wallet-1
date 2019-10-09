@@ -36,8 +36,6 @@ cp -r doc/check /usr/share/doc
 cp ./info/check.info.gz /usr/share/info
 cp ./man/man1/checkmk.1.gz /usr/share/man/man1/
 
-pip install yamllint
-
 echo "Successfully moved all needed tools"
 echo "WARNING!!! Don't forget to install Arm-None-Eabi Toolchain and ST-Link Utility"
 echo "See README.md for more details"
