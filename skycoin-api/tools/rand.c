@@ -68,7 +68,7 @@ uint32_t __attribute__((weak)) _random32(void)
 //
 
 #ifdef __CYGWIN__
-#pragma weak _random_buffer
+// #pragma weak _random_buffer
 void _random_buffer(uint8_t* buf, size_t len)
 #else
 void __attribute__((weak)) _random_buffer(uint8_t* buf, size_t len)
