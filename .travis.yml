@@ -36,10 +36,10 @@ before_script:
     export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start';
     export shell="$msys2 -mingw64 -full-path -here -c \$\* --";
     export msys2+=" -msys2 -c \$\* --";
-    DIR;
     cd .\\tiny-firmware\\vendor;
     del /Q skycoin-crypto ;
     mklink /d skycoin-crypto ..\\..\\skycoin-api\\;
+    DIR;
     cd ..\\..\\;
     $msys2 sh ./ci-scripts/install-windows.sh 1 ;
     else
