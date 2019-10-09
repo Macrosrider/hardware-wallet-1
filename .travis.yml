@@ -3,7 +3,7 @@ matrix:
   include:
     - os: linux
       env:
-        - PIP='sudo pip'
+        - PIP='sudo pip3'
       addons:
         apt:
           sources:
@@ -47,6 +47,8 @@ before_script:
     fi
   # Install OS-specific test and build dependencies
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then export PATH="/opt/gcc-arm-none-eabi-6-2017-q2-update/bin:$PATH" ; fi
+  - sudo python3 -m pip install --force-reinstall pip
+  - sudo python3 -m pip install setuptools
   # Install linters
 
   - git submodule update --remote
