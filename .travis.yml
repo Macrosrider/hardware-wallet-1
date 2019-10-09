@@ -14,7 +14,7 @@ matrix:
     - os: windows
 
 before_script:
-    - git submodule update --remote
+  - git submodule update --remote
   # Define env vars for Linux builds
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
     eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh";
