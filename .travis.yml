@@ -46,7 +46,7 @@ before_script:
     export shell="$msys2 -mingw64 -full-path -here -c \$\* --";
     export msys2+=" -msys2 -c \$\* --";
     $msys2 sh ./ci-scripts/install-windows.sh 1 ;
-    pip install yamllint ;
+    $shell python3 -m pip install yamllint ;
     fi
   # Install linters
   - git submodule update --remote
