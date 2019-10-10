@@ -13,7 +13,12 @@ matrix:
         - PYTHON=python3
 
 before_script:
-  - sh "./tiny-firmware/protob/ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
+  - if [[$TRAVIS_OS_NAME != 'windows']]; then
+    sh "./tiny-firmware/protob/ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
+    eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh"
+    sudo python3 -m pip install --force-reinstall pip ;
+    sudo python3 -m pip install setuptools ;
+    fi
   # Define env vars for Linux builds
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
     ls -l /usr/local/bin/protoc ;
@@ -29,10 +34,7 @@ before_script:
     export DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH}:${CHECK_PATH}/lib" ;
     fi
   # Install OS-specific test and build dependencies
-  - eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh"
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then export PATH="/opt/gcc-arm-none-eabi-6-2017-q2-update/bin:$PATH" ; fi
-  - sudo python3 -m pip install --force-reinstall pip
-  - sudo python3 -m pip install setuptools
   # Install linters
   - make install-linters
   - git submodule update --remote

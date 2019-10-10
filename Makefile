@@ -82,6 +82,9 @@ install-linters-Darwin:
 install-linters-Linux:
 	$(PIP) install $(PIPARGS) yamllint
 
+install-linters-Msys:
+	$(PIP) install yamllint
+
 install-linters: install-linters-$(UNAME_S) ## Install code quality checking tools
 
 lint: ## Check code quality
