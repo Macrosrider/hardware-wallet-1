@@ -11,6 +11,7 @@ matrix:
     - os: osx
       env:
         - PYTHON=python3
+    - os: windows
 
 before_script:
   - if [[ $TRAVIS_OS_NAME != 'windows' ]]; then
@@ -36,23 +37,31 @@ before_script:
     eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
     sudo python3 -m pip install --force-reinstall pip ;
     sudo python3 -m pip install setuptools ;
+    else
+    choco install -y gcc-arm-embedded msys2;
+    export msys2='cmd //C RefreshEnv.cmd ';
+    export msys2+='& set MSYS=winsymlinks:nativestrict ';
+    export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start';
+    export shell="$msys2 -mingw64 -full-path -here -c \$\* --";
+    export msys2+=" -msys2 -c \$\* --";
+    $msys2 sh ./ci-scripts/install-windows.sh 1 ;
     fi
   # Install linters
-  - make install-linters
+  - $shell make install-linters
   - git submodule update --remote
 
 script:
-  - make check-protob
-  - make lint
-  - make -C tiny-firmware/protob build-c
-  - FIRMWARE_SIGNATURE_PUB_KEY1=0241d51e593f681006f9f3c4a0ec744d459c960601b4ed770d979c32ace63b0a7a make test
-  - make clean
-  - make emulator
-  - make clean
-  - make bootloader-mem-protect
-  - make bootloader-clean
-  - make full-firmware
-  - make clean
+  - $shell make check-protob
+  - $shell make lint
+  - $shell make -C tiny-firmware/protob build-c
+  - FIRMWARE_SIGNATURE_PUB_KEY1=0241d51e593f681006f9f3c4a0ec744d459c960601b4ed770d979c32ace63b0a7a $shell make test
+  - $shell make clean
+  - $shell make emulator
+  - $shell make clean
+  - $shell make bootloader-mem-protect
+  - $shell make bootloader-clean
+  - $shell make full-firmware
+  - $shell make clean
 
 notifications:
   # https://github.com/kvld/travisci-telegram TravisCI Telegram Bot integration
@@ -60,13 +69,13 @@ notifications:
 
 before_deploy:
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
-      make release;
+      $shell make release;
       VERSION_BOOTLOADER=$(cat tiny-firmware/bootloader/VERSION);
       ID_VENDOR=12602;
       ID_PRODUCT=1;
       export COMBINED_VERSION=${VERSION_BOOTLOADER}-${TRAVIS_TAG}-${ID_VENDOR}-${ID_PRODUCT}-1;
     else
-      make release-emulator;
+      $shell make release-emulator;
     fi
 
 deploy:
