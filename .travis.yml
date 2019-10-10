@@ -14,7 +14,6 @@ matrix:
     - os: windows
 
 before_script:
-  - git submodule update --remote
   # Define env vars for Linux builds
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
     eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh";
@@ -42,17 +41,17 @@ before_script:
     ln -s ..\..\skycoin-api\ skycoin-crypto;
     cd ..\\..\\;
     $msys2 sh ./ci-scripts/install-windows.sh 1 ;
-    pip install yamllint;
     else
     sh "./tiny-firmware/protob/ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
     make install-linters;
-    sudo python3 -m pip install --force-reinstall pip;
-    sudo python3 -m pip install setuptools;
-    sudo pytgon3 -m pip install yamllint;
     fi
   # Install OS-specific test and build dependencies
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then export PATH="/opt/gcc-arm-none-eabi-6-2017-q2-update/bin:$PATH" ; fi
+  - sudo python3 -m pip install --force-reinstall pip
+  - sudo python3 -m pip install setuptools
   # Install linters
+
+  - git submodule update --remote
 
 script:
   - $shell make check-protob
