@@ -13,7 +13,7 @@ matrix:
         - PYTHON=python3
 
 before_script:
-  - if [[$TRAVIS_OS_NAME != 'windows']]; then
+  - if [[ $TRAVIS_OS_NAME == 'linux' OR $TRAVIS_OS_NAME == 'osx' ]]; then
     sh "./tiny-firmware/protob/ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
     fi
   # Define env vars for Linux builds
@@ -32,7 +32,7 @@ before_script:
     fi
   # Install OS-specific test and build dependencies
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then export PATH="/opt/gcc-arm-none-eabi-6-2017-q2-update/bin:$PATH" ; fi
-  - if [[$TRAVIS_OS_NAME != 'windows']]; then
+  - if [[ $TRAVIS_OS_NAME == 'linux' OR $TRAVIS_OS_NAME == 'osx' ]]; then
     eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
     sudo python3 -m pip install --force-reinstall pip ;
     sudo python3 -m pip install setuptools ;
