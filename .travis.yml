@@ -37,6 +37,7 @@ before_script:
     eval "./ci-scripts/install-${TRAVIS_OS_NAME}.sh" ;
     sudo python3 -m pip install --force-reinstall pip ;
     sudo python3 -m pip install setuptools ;
+    $shell make install-linters ;
     else
     choco install -y gcc-arm-embedded msys2;
     export msys2='cmd //C RefreshEnv.cmd ';
@@ -45,9 +46,9 @@ before_script:
     export shell="$msys2 -mingw64 -full-path -here -c \$\* --";
     export msys2+=" -msys2 -c \$\* --";
     $msys2 sh ./ci-scripts/install-windows.sh 1 ;
+    pip install yamllint ;
     fi
   # Install linters
-  - $shell make install-linters
   - git submodule update --remote
 
 script:
